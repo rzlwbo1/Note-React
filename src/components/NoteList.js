@@ -1,9 +1,7 @@
 import React from "react";
 import NoteItem from "./NoteItem";
 
-function NoteList({notes, onDelete, onArchive, }) {
-
-  console.log(notes);
+function NoteList({notes, onDelete, onArchive}) {
 
   if(notes.length !== 0) {
 

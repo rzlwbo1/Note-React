@@ -23,7 +23,6 @@ class NoteApp extends React.Component {
     // ubah state nya, dengan memfilter array
     const notes = this.state.notes.filter((note) => note.id !== id);
     this.setState({notes});
-    // console.log(this.state.notes);
 
   }
 

@@ -7,7 +7,8 @@ class NoteInput extends React.Component {
 
     this.state = {
       title: "",
-      body: ""
+      body: "",
+      maxChar: 50,
     }
 
     this.onTitleChange = this.onTitleChange.bind(this);
@@ -17,11 +18,29 @@ class NoteInput extends React.Component {
 
 
   onTitleChange(ev) {
-    this.setState((prevState) => {
-      return {
-        title: ev.target.value
-      }
-    })
+
+    const max = 50;
+    const titleInput = ev.target.value.slice(0, max);
+    const titleInputLength = titleInput.length;
+
+    let count = max - titleInputLength;
+
+    if(count == 0) {
+      this.setState(() => {
+        return {
+          title: titleInput,
+          maxChar: 0
+        }
+      })
+    } else {
+      this.setState((prevState) => {
+      
+        return {
+          title: ev.target.value,
+          maxChar: max - titleInputLength
+        }
+      })
+    }
   }
 
   onTextareaChange(ev) {
@@ -44,7 +63,7 @@ class NoteInput extends React.Component {
       <div className="note-input">
         <h2>Buat Note Baru ✏️</h2>
         <form onSubmit={this.onSubmitForm}>
-          <p className="note-input__title__char-limit">Sisa Karakter : 50</p>
+          <p className="note-input__title__char-limit">Sisa Karakter : {this.state.maxChar}</p>
           <input className="note-input__title" type="text" placeholder="Ini adalah judul..." required value={this.state.title} onChange={this.onTitleChange} />
           <textarea className="note-input__body" placeholder="tulis penjelasan note kamu" value={this.state.body} onChange={this.onTextareaChange}></textarea>
           <button type="submit">Tambah Note</button>
