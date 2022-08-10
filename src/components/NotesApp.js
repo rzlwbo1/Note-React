@@ -1,8 +1,7 @@
 import React from "react";
 import NoteList from "./NoteList";
-import {getInitialData} from '../utils/index'
+import {getInitialData} from '../utils/index';
 import NoteInput from "./NoteInput";
-import InputSearch from "./InputSearch";
 
 class NoteApp extends React.Component {
 
@@ -81,7 +80,6 @@ class NoteApp extends React.Component {
       <React.Fragment>
         <div className="note-app__header">
           <h1>My Notes</h1>
-          <InputSearch />
         </div>
 
         <div className="note-app__body">
