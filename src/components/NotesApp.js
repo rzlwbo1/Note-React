@@ -10,11 +10,12 @@ class NoteApp extends React.Component {
     super(props)
 
     this.state = {
-      notes: getInitialData()
+      notes: getInitialData(),
     }
 
     this.onDeleteHandler = this.onDeleteHandler.bind(this);
     this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
+    this.onArchivedHandler = this.onArchivedHandler.bind(this);
   }
 
   onDeleteHandler(id) {
@@ -41,20 +42,57 @@ class NoteApp extends React.Component {
           }
         ]
       }
-    })
+    });
+
+    // console.log(this.state.notes)
+  }
+
+
+  onArchivedHandler(id) {
+
+    const notes = this.state.notes.map((note) => {
+
+      if(note.id === id) {
+        return {
+          // spread ini sama aja kek = id: note.id, body: note.body, dipara bgitu jadi spread aja, kerluarin nilainya
+          ...note,
+          archived: !note.archived
+        }
+      } else {
+        return note;
+      }
+
+    });
+
+    this.setState({notes});
 
   }
 
+
   render() {
+    
+    const activeNotes = this.state.notes.filter((note) => {
+      return note.archived === false;
+    });
+    const archivedNotes = this.state.notes.filter((note) => {
+      return note.archived === true;
+    })
+
     return (
       <React.Fragment>
         <div className="note-app__header">
           <h1>My Notes</h1>
           <InputSearch />
         </div>
+
         <div className="note-app__body">
           <NoteInput addNote={this.onAddNoteHandler}/>
-          <NoteList notes={this.state.notes} onDelete={this.onDeleteHandler}/>
+
+          <h2>Note Aktif</h2>
+          <NoteList notes={activeNotes} onDelete={this.onDeleteHandler} onArchive={this.onArchivedHandler}/>
+
+          <h2>Arsip</h2>
+          <NoteList notes={archivedNotes} onDelete={this.onDeleteHandler} onArchive={this.onArchivedHandler}/>
         </div>
       </React.Fragment>
     )
